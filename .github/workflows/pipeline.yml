@@ -22,7 +22,7 @@ jobs:
         run: |
           for dir in ./lambda*; do
             if [ -d "$dir" ]; then
-            echo -e "\n*** Installing dependencies and building '${dir#./}' ***\n"
+            echo -e "\n\n*** Installing dependencies and building '${dir#./}' ***\n\n"
               cd "$dir"
               npm install
               npm run build
@@ -48,7 +48,7 @@ jobs:
         run: |
           for dir in ./lambda*; do
             if [ -d "$dir" ]; then
-            echo -e "\n*** Running unit tests for '${dir#./}'***\n"
+            echo -e "\n\n*** Running unit tests for '${dir#./}'***\n\n"
               cd "$dir"
               npm install
               npm run test
@@ -85,7 +85,7 @@ jobs:
         run: |
           for dir in ./lambda*; do
             if [ -d "$dir" ]; then
-              echo -e "\n*** Creating zip file for '${dir#./}' ***\n"
+              echo -e "\n\n*** Creating zip file for '${dir#./}' ***\n\n"
               mkdir -p "$dir/tmp"
               cp -r "$dir/node_modules" "$dir/tmp"
               cp -r "$dir/build/src/." "$dir/tmp"
@@ -107,7 +107,7 @@ jobs:
         run: |
           for dir in ./lambda*; do
             if [ -f "$dir/function.zip" ]; then
-              echo -e "\n*** Uploading zip for '${dir#./}' to S3 bucket ***\n"
+              echo -e "\n\n*** Uploading zip for '${dir#./}' to S3 bucket ***\n\n"
               aws s3 cp "$dir/function.zip" "s3://$(basename $dir)/function.zip"
             fi
           done
@@ -116,7 +116,7 @@ jobs:
         run: |
           for dir in ./lambda*; do
             if [ -f "$dir/function.zip" ]; then
-              echo -e "\n*** Updating function '${dir#./}' ***\n"
+              echo -e "\n\n*** Updating function '${dir#./}' ***\n\n"
               FUNCTION_NAME=$(basename $dir)
               aws lambda update-function-code --function-name $(basename $dir) --s3-bucket $(basename $dir) --s3-key "function.zip"
             fi
