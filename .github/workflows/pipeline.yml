@@ -22,7 +22,7 @@ jobs:
         run: |
           for dir in ./lambda*; do
             if [ -d "$dir" ]; then
-            echo -e "\n*** Installing dependencies and building '${dir#./}' ***\n"
+            echo -e "-\n*** Installing dependencies and building '${dir#./}' ***\n-"
               cd "$dir"
               npm install
               npm run build
