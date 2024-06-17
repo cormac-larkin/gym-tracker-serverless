@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/cormac-larkin/GymTracker#readme",
   "dependencies": {
+    "@aws-sdk/client-ssm": "^3.598.0",
     "dotenv": "^16.4.5",
     "pg": "^8.11.4"
   },

@@ -1,17 +1,40 @@
 import { APIGatewayEvent, Context } from "aws-lambda";
 import { Client } from "pg";
+import { SSM } from "@aws-sdk/client-ssm";
 import * as dotenv from "dotenv";
 
 dotenv.config();
 
 export const handler = async (event: APIGatewayEvent, context?: Context) => {
   try {
+    const getParameter = async (parameterName: string, decrypt: boolean) => {
+      const ssm = new SSM();
+
+      const response = await ssm.getParameter({
+        Name: parameterName,
+        WithDecryption: decrypt,
+      });
+      return response.Parameter?.Value;
+    };
+
+    const userParam = process.env.DB_USER || "unknown";
+    const hostParam = process.env.DB_HOST || "unknown";
+    const databaseParam = process.env.DB_NAME || "unknown";
+    const passwordParam = process.env.DB_PASSWORD || "unknown";
+    const portParam = process.env.DB_PORT || "unknown";
+
+    const user = await getParameter(userParam, false);
+    const host = await getParameter(hostParam, false);
+    const database = await getParameter(databaseParam, false);
+    const password = await getParameter(passwordParam, false);
+    const port = await getParameter(portParam, false);
+
     const client = new Client({
-      user: process.env.DB_USER,
-      host: process.env.DB_HOST,
-      database: process.env.DB_NAME,
-      password: process.env.DB_PASSWORD,
-      port: parseInt(process.env.DB_PORT || "5432"),
+      user,
+      host,
+      database,
+      password,
+      port: parseInt(port || "5432"),
     });
 
     await client.connect();
