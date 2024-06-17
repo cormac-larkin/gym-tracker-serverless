@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,34 +28,6 @@ jobs:
               cd ..
             fi
           done
-
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: |
-            **/node_modules
-            **/build
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('./lambda*', './**/*.js', './**/*.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node_modules-
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Restore cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            **/node_modules
-            **/build
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('./lambda*', './**/*.js', './**/*.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node_modules-
 
       - name: Zip lambda functions
         run: |
