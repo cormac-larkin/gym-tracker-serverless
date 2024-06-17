@@ -1,0 +1,44 @@
+{
+  "name": "gymtracker",
+  "version": "1.0.0",
+  "description": "A Typescript application for logging workouts and tracking progress over time",
+  "main": "build/src/index.js",
+  "scripts": {
+    "start": "npm run build && node build/index.js",
+    "start:dev": "npx ts-node-dev --respawn --transpile-only src/index.ts",
+    "test": "npm run build && npx jest",
+    "build": "rm -rf build && npx tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cormac-larkin/GymTracker.git"
+  },
+  "keywords": [
+    "fitness",
+    "gym",
+    "typescript",
+    "javascript"
+  ],
+  "author": "Cormac Larkin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cormac-larkin/GymTracker/issues"
+  },
+  "homepage": "https://github.com/cormac-larkin/GymTracker#readme",
+  "dependencies": {
+    "@aws-sdk/client-ssm": "^3.598.0",
+    "dotenv": "^16.4.5",
+    "pg": "^8.11.4",
+    "ramda": "^0.30.1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.138",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.2",
+    "@types/pg": "^8.11.4",
+    "jest-mock-extended": "^3.0.5",
+    "ts-jest": "^29.1.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.4.3"
+  }
+}
