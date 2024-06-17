@@ -1,0 +1,68 @@
+name: Deploy Lambda Functions
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+
+      - name: Install dependencies and build lambdas
+        run: |
+          for dir in ./lambda*; do
+            if [ -d "$dir" ]; then
+              cd "$dir"
+              npm install
+              npm run build
+              cd ..
+            fi
+          done
+
+      - name: Zip lambda functions
+        run: |
+          for dir in ./lambda*; do
+            if [ -d "$dir" ]; then
+              mkdir -p "$dir/tmp"
+              cp -r "$dir/node_modules" "$dir/tmp"
+              cp -r "$dir/build/src" "$dir/tmp"
+              cd "$dir/tmp"
+              zip -r ../function.zip .
+              cd ../..
+              rm -rf "$dir/tmp"
+            fi
+          done
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      - name: Upload to S3
+        run: |
+          for dir in ./lambda*; do
+            if [ -f "$dir/function.zip" ]; then
+              aws s3 cp "$dir/function.zip" "s3://$(basename $dir)/function.zip"
+            fi
+          done
+
+      - name: Update Lambda functions
+        run: |
+          for dir in ./lambda*; do
+            if [ -f "$dir/function.zip" ]; then
+              FUNCTION_NAME=$(basename $dir)
+              aws lambda update-function-code --function-name $(basename $dir) --s3-bucket $(basename $dir) --s3-key "function.zip"
+            fi
+          done
