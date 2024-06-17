@@ -6,7 +6,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 export const handler = async (event: APIGatewayEvent, context?: Context) => {
-  console.log("DELETE EXERCISE BY ID");
+  console.log("UPDATE EXERCISE BY ID");
   try {
     const getParameter = async (parameterName: string, decrypt: boolean) => {
       const ssm = new SSM();
