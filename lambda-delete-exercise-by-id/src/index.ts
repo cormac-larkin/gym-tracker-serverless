@@ -17,6 +17,8 @@ export const handler = async (event: APIGatewayEvent, context?: Context) => {
       });
       return response.Parameter?.Value;
     };
+    console.log("DELETE EXERCISE BY ID");
+    console.log("DELETE EXERCISE BY ID");
 
     const userParam = process.env.DB_USER || "unknown";
     const hostParam = process.env.DB_HOST || "unknown";
@@ -42,6 +44,8 @@ export const handler = async (event: APIGatewayEvent, context?: Context) => {
     const exerciseId = event.pathParameters?.id;
 
     console.log(`ENTERED FUNCTION - EXERCISE ID: ${exerciseId}`);
+    console.log("DELETE EXERCISE BY ID");
+    console.log("DELETE EXERCISE BY ID");
 
     if (!exerciseId) {
       console.log(`NO EXERCISE ID RECEIVED`);

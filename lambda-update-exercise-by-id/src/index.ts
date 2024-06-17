@@ -40,6 +40,8 @@ export const handler = async (event: APIGatewayEvent, context?: Context) => {
 
     await client.connect();
     const exerciseId = event.pathParameters?.id;
+    console.log("UPDATE EXERCISE BY ID");
+    console.log("UPDATE EXERCISE BY ID");
 
     console.log(`ENTERED FUNCTION - EXERCISE ID: ${exerciseId}`);
 
@@ -50,6 +52,7 @@ export const handler = async (event: APIGatewayEvent, context?: Context) => {
         body: JSON.stringify({ message: "Exercise ID is required" }),
       };
     }
+    console.log("UPDATE EXERCISE BY ID");
 
     console.log(`BEFORE QUERY`);
     const result = await client.query({

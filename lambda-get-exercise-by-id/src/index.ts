@@ -18,6 +18,8 @@ export const handler = async (event: APIGatewayEvent, context?: Context) => {
       return response.Parameter?.Value;
     };
 
+    console.log("GET EXERCISE BY ID");
+    console.log("GET EXERCISE BY ID");
     const userParam = process.env.DB_USER || "unknown";
     const hostParam = process.env.DB_HOST || "unknown";
     const databaseParam = process.env.DB_NAME || "unknown";
@@ -29,6 +31,8 @@ export const handler = async (event: APIGatewayEvent, context?: Context) => {
     const database = await getParameter(databaseParam, false);
     const password = await getParameter(passwordParam, false);
     const port = await getParameter(portParam, false);
+    console.log("GET EXERCISE BY ID");
+    console.log("GET EXERCISE BY ID");
 
     const client = new Client({
       user,
