@@ -35,7 +35,7 @@ jobs:
             if [ -d "$dir" ]; then
               mkdir -p "$dir/tmp"
               cp -r "$dir/node_modules" "$dir/tmp"
-              cp -r "$dir/build/src" "$dir/tmp"
+              cp -r "$dir/build/src/." "$dir/tmp"
               cd "$dir/tmp"
               zip -r ../function.zip .
               cd ../..
