@@ -22,7 +22,7 @@ jobs:
         run: |
           for dir in ./lambda*; do
             if [ -d "$dir" ]; then
-            echo "\n*** Installing dependencies and building '$dir' ***\n"
+            echo -e "\n*** Installing dependencies and building '${dir#./}' ***\n"
               cd "$dir"
               npm install
               npm run build
@@ -44,15 +44,13 @@ jobs:
         with:
           node-version: "20.x"
 
-      - name: Install test dependencies
-        run: npm i typescript jest ts-node
-
       - name: Run unit tests
         run: |
           for dir in ./lambda*; do
             if [ -d "$dir" ]; then
-            echo "\n*** Running unit tests for '$dir'\n***"
+            echo -e "\n*** Running unit tests for '${dir#./}'\n***"
               cd "$dir"
+              npm install
               npm run test
               cd ..
             fi
@@ -87,7 +85,7 @@ jobs:
         run: |
           for dir in ./lambda*; do
             if [ -d "$dir" ]; then
-              echo "\n*** Zipping '$dir' ***\n"
+              echo -e "\n*** Creating zip file for '${dir#./}' ***\n"
               mkdir -p "$dir/tmp"
               cp -r "$dir/node_modules" "$dir/tmp"
               cp -r "$dir/build/src/." "$dir/tmp"
@@ -109,7 +107,7 @@ jobs:
         run: |
           for dir in ./lambda*; do
             if [ -f "$dir/function.zip" ]; then
-              echo "\n*** Uploading zip for '$dir' to S3 bucket ***\n"
+              echo -e "\n*** Uploading zip for '${dir#./}' to S3 bucket ***\n"
               aws s3 cp "$dir/function.zip" "s3://$(basename $dir)/function.zip"
             fi
           done
@@ -118,7 +116,7 @@ jobs:
         run: |
           for dir in ./lambda*; do
             if [ -f "$dir/function.zip" ]; then
-              echo "\n*** Updating function '$dir' ***\n"
+              echo -e "\n*** Updating function '${dir#./}' ***\n"
               FUNCTION_NAME=$(basename $dir)
               aws lambda update-function-code --function-name $(basename $dir) --s3-bucket $(basename $dir) --s3-key "function.zip"
             fi
