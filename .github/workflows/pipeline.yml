@@ -9,50 +9,49 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-        - name: Set up Node.js
-          uses: actions/setup-node@v4
-          with:
-            node-version: "20.x"
-            cache: "npm"
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "npm"
 
-        - name: Install dependencies and build lambdas
-          run: |
-            for dir in ./lambda*; do
-              if [ -d "$dir" ]; then
-                cd "$dir"
-                npm ci
-                npm run build
-                cd ..
-              fi
-            done
+      - name: Install dependencies and build lambdas
+        run: |
+          for dir in ./lambda*; do
+            if [ -d "$dir" ]; then
+              cd "$dir"
+              npm ci
+              npm run build
+              cd ..
+            fi
+          done
 
   unit-test:
     runs-on: ubuntu-latest
 
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-        - name: Set up Node.js
-          uses: actions/setup-node@v4
-          with:
-            node-version: "20.x"
-            cache: "npm"
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "npm"
 
-        - name: Run unit tests
-          run: |
-            for dir in ./lambda*; do
-              if [ -d "$dir" ]; then
-                cd "$dir"
-                npm run test
-                cd ..
-              fi
-            done
-
+      - name: Run unit tests
+        run: |
+          for dir in ./lambda*; do
+            if [ -d "$dir" ]; then
+              cd "$dir"
+              npm run test
+              cd ..
+            fi
+          done
 
   deploy:
     runs-on: ubuntu-latest
