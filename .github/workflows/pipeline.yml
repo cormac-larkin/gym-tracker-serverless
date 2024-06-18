@@ -22,11 +22,7 @@ jobs:
         run: |
           projects=$(find . -maxdepth 1 -type d -name 'lambda-*' | sed 's|./||' | jq -R -s -c 'split("\n") | map(select(length > 0))')
           echo "Found projects: $projects"
-          echo "projects=$projects" >> $GITHUB_ENV
-
-      - name: Set output
-        run: |
-          echo "::set-output name=projects::${{ env.projects }}"
+          echo "::set-output name=projects::$projects"
 
   npm_install:
     runs-on: ubuntu-latest
