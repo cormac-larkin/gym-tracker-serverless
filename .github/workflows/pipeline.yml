@@ -109,7 +109,7 @@ jobs:
       - name: Upload zipfile to S3 bucket
         run: |
           cd ${{ matrix.project }}
-          aws s3 cp function.zip s3://${{ matrix.project }})/function.zip
+          aws s3 cp function.zip s3://${{ matrix.project }}/function.zip
 
       - name: Update lambda function
         run: |
