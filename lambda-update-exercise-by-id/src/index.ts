@@ -6,7 +6,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 export const handler = async (event: APIGatewayEvent, context?: Context) => {
-  console.log("UPDATE EXERCISE BY ID");
+  console.log("GET EXERCISE BY ID");
   try {
     const getParameter = async (parameterName: string, decrypt: boolean) => {
       const ssm = new SSM();
@@ -18,6 +18,8 @@ export const handler = async (event: APIGatewayEvent, context?: Context) => {
       return response.Parameter?.Value;
     };
 
+    console.log("GET EXERCISE BY ID");
+    console.log("GET EXERCISE BY ID");
     const userParam = process.env.DB_USER || "unknown";
     const hostParam = process.env.DB_HOST || "unknown";
     const databaseParam = process.env.DB_NAME || "unknown";
@@ -29,6 +31,8 @@ export const handler = async (event: APIGatewayEvent, context?: Context) => {
     const database = await getParameter(databaseParam, false);
     const password = await getParameter(passwordParam, false);
     const port = await getParameter(portParam, false);
+    console.log("GET EXERCISE BY ID");
+    console.log("GET EXERCISE BY ID");
 
     const client = new Client({
       user,
@@ -40,8 +44,6 @@ export const handler = async (event: APIGatewayEvent, context?: Context) => {
 
     await client.connect();
     const exerciseId = event.pathParameters?.id;
-    console.log("UPDATE EXERCISE BY ID");
-    console.log("UPDATE EXERCISE BY ID");
 
     console.log(`ENTERED FUNCTION - EXERCISE ID: ${exerciseId}`);
 
@@ -52,7 +54,6 @@ export const handler = async (event: APIGatewayEvent, context?: Context) => {
         body: JSON.stringify({ message: "Exercise ID is required" }),
       };
     }
-    console.log("UPDATE EXERCISE BY ID");
 
     console.log(`BEFORE QUERY`);
     const result = await client.query({

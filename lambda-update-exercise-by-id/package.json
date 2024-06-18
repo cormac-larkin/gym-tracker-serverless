@@ -28,8 +28,7 @@
   "dependencies": {
     "@aws-sdk/client-ssm": "^3.598.0",
     "dotenv": "^16.4.5",
-    "pg": "^8.11.4",
-    "sanitize-html": "^2.13.0"
+    "pg": "^8.11.4"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.138",
