@@ -31,7 +31,7 @@ export const handler = async (event: APIGatewayEvent, context?: Context) => {
     const database = await getParameter(databaseParam, false);
     const password = await getParameter(passwordParam, false);
     const port = await getParameter(portParam, false);
-    console.log("GET EXERCISE BY ID");
+    console.log("GET EXERCISE BY I");
     console.log("GET EXERCISE BY ID");
 
     const client = new Client({
