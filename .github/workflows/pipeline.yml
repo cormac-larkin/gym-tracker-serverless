@@ -101,7 +101,8 @@ jobs:
       - name: Create lambda zipfile
         run: |
           cd ${{ matrix.project }}
-          cp -r ./node_modules ./temp
+          mkdir temp
+          cp -r ./node_modules ./temp/node_modules
           cp -r ./build/src/. ./temp
           cd ./temp
           zip -r ../function.zip .
