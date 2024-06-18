@@ -7,7 +7,7 @@
     "start": "npm run build && node build/index.js",
     "start:dev": "npx ts-node-dev --respawn --transpile-only src/index.ts",
     "test": "npm run build && npx jest",
-    "build": "rm -rf build && npx tsc"
+    "build": "rm -rf build && npx tsc -p tsconfig.build.json"
   },
   "repository": {
     "type": "git",
